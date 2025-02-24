@@ -1,0 +1,46 @@
+﻿@page "/photos/favorites"
+@using System.Text.Json
+@inject IJSRuntime JSRuntime
+
+@rendermode InteractiveAuto
+
+<h3>Favorite Photos</h3>
+
+@if (favorites is null || favorites.Count == 0)
+{
+    <p>You did not like any photo on this device, yet.</p>
+} else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var id in favorites)
+        {
+            <div class="col">
+                <a href="@($"photos/details/{id}")">
+                    <h5>View Details Of Photo @id</h5>
+                    <img src="@($"photoimage/{id}")" class="card-img-top" alt="@id">
+                </a>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    SortedSet<int> favorites = default!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            SortedSet<int> favoritesIds;
+            string favoritesLocalStorage = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "favorites");
+            if (String.IsNullOrEmpty(favoritesLocalStorage))
+            {
+                favorites = new SortedSet<int>();
+            } else
+            {
+                favorites = JsonSerializer.Deserialize<SortedSet<int>>(favoritesLocalStorage);
+            }
+            StateHasChanged();
+        }
+    }
+}

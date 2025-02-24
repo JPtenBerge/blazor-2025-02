@@ -1,0 +1,23 @@
+﻿@using System.Text.Json
+@inject IJSRuntime JSRuntime
+<button @onclick="AddToLocalStorage" class="btn btn-link">Like</button>
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public async Task AddToLocalStorage()
+    {
+        SortedSet<int> favoritesIds;
+        string favoritesLocalStorage = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "favorites");
+        if (String.IsNullOrEmpty(favoritesLocalStorage))
+        {
+            favoritesIds = new SortedSet<int>();
+        }
+        else
+        {
+            favoritesIds = JsonSerializer.Deserialize<SortedSet<int>>(favoritesLocalStorage);
+        }
+        favoritesIds.Add(Id);
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "favorites", JsonSerializer.Serialize(favoritesIds));
+    }
+}
