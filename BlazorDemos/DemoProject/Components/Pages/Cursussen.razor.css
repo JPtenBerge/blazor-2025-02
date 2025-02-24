@@ -1,3 +1,7 @@
 ﻿td img {
     max-width: 120px;
 }
+
+form ol {
+    list-style-type: none;
+}

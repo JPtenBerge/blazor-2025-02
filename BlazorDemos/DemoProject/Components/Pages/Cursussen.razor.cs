@@ -1,12 +1,16 @@
 ﻿using DemoProject.Entities;
+using Microsoft.AspNetCore.Components;
 
 namespace DemoProject.Components.Pages
 {
-    public partial class Cursussen
+    public partial class Cursussen : ComponentBase
     {
+        [SupplyParameterFromForm()]
+        public Course NewCourse { get; set; } = new();
+
         public string Naam { get; set; } = "JP";
 
-        public List<Course>? Courses { get; set; } = new()
+        public static List<Course>? Courses { get; set; } = new()
         {
             new()
             {
@@ -27,5 +31,15 @@ namespace DemoProject.Components.Pages
                 FunPhoto = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/React.svg/1200px-React.svg.png"
             }
         };
+
+        public void AddCourse()
+        {
+            Courses.Add(NewCourse);
+        }
+
+        public void DuurtLang()
+        {
+            Thread.Sleep(3000);
+        }
     }
 }

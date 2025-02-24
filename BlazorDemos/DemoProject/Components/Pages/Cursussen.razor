@@ -6,7 +6,45 @@
 
 <h3>Cursussen</h3>
 
-Naam: @Naam
+
+a11y - accessibility
+
+3 doelgroepen:
+- cognitief/slechthorende/slechtziende/blinde mensen
+- alles ok mensen
+- zoekmachines/bots/SEO/AI
+
+
+<EditForm Model="NewCourse" method="post" OnInvalidSubmit="DuurtLang" OnValidSubmit="AddCourse" FormName="AddCourseForm">
+	<DataAnnotationsValidator />
+	@* <FluentValidationValidator /> *@
+
+	<ValidationSummary />
+
+	<ol>
+		<li style="display: flex;">
+			<label for="input-title">Titel:</label>
+			@* <input name="newcourse.title" id="input-title" /> *@
+			<InputText @bind-Value="NewCourse.Title" id="input-title" />
+			<ValidationMessage For="() => NewCourse.Title" />
+		</li>
+		<li style="display: flex;">
+			<label for="input-nr-of-days"># dagen:</label>
+			<InputNumber @bind-Value="NewCourse.NrOfDays" id="input-nr-of-days" />
+			<ValidationMessage For="() => NewCourse.NrOfDays" />
+		</li>
+		<li style="display: flex;">
+			<label for="input-fun-photo">Leuke foto:</label>
+			<InputText @bind-Value="NewCourse.FunPhoto" id="input-fun-photo" type="url" />
+			<ValidationMessage For="() => NewCourse.FunPhoto" />
+		</li>
+		<li>
+			<button>Voeg cursus toe</button>
+		</li>
+	</ol>
+</EditForm>
+
+
 
 @if (Courses is null)
 {

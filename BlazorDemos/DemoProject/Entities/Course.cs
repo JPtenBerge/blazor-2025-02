@@ -1,10 +1,16 @@
-﻿namespace DemoProject.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DemoProject.Entities;
 
 public class Course
 {
-    public required string Title { get; set; }
+    [Required(ErrorMessage = "Vul in sukkel")]
+    [RegularExpression("^[a-zA-Z0-9: #.'-]*$", ErrorMessage = "Bladiebla letters graag")]
+    public string Title { get; set; }
 
-    public required byte NrOfDays { get; set; }
+    [Required]
+    [Range(0, 7)]
+    public short NrOfDays { get; set; }
 
-    public required string FunPhoto { get; set; }
+    public string FunPhoto { get; set; }
 }
