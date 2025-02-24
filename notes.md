@@ -18,10 +18,9 @@
   - het kan wel...
 - in je template <div @ref="MijnDiv"> ElementReference new Mock<ElementReference> struct
 
+```html
 <input @ref="InputDinges">   .FocusAsync()
-
-
-
+```
 
 
 ## Paradigdmas der webdevelopment
@@ -58,6 +57,15 @@
   - niet hip
   - FOUC
   - Blazor Static SSR
+
+### Doelgroepen website/webapp
+
+a11y - accessibility
+
+3 doelgroepen:
+- cognitief/slechthorende/slechtziende/blinde mensen
+- alles ok mensen
+- zoekmachines/bots/SEO/AI
 
 ## Blazor-edities
 
