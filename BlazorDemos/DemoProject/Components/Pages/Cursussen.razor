@@ -1,0 +1,37 @@
+﻿@page "/cursussen"
+
+@{
+	var bla = "iets";
+}
+
+<h3>Cursussen</h3>
+
+Naam: @Naam
+
+@if (Courses is null)
+{
+	<text>Geen cursussen.</text>
+}
+else
+{
+	<table>
+		<thead>
+			<tr>
+				<th>Titel</th>
+				<th># dagen</th>
+				<th>Leuke foto</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var course in Courses)
+			{
+				<tr>
+					<td>@course.Title</td>
+					<td>@course.NrOfDays (@(course.NrOfDays > 3 ? "lang" : "kort"))</td>
+					<td><img src="@course.FunPhoto"></td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+}
