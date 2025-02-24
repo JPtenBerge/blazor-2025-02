@@ -4,6 +4,8 @@ namespace DemoProject.Entities;
 
 public class Course
 {
+    public int Id { get; set; }
+    
     [Required(ErrorMessage = "Vul in sukkel")]
     [RegularExpression("^[a-zA-Z0-9: #.'-]*$", ErrorMessage = "Bladiebla letters graag")]
     public string Title { get; set; }

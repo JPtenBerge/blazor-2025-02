@@ -1,45 +1,32 @@
 ﻿using DemoProject.Entities;
+using DemoProject.Repositories;
 using Microsoft.AspNetCore.Components;
 
-namespace DemoProject.Components.Pages
+namespace DemoProject.Components.Pages;
+
+public partial class Cursussen : ComponentBase
 {
-    public partial class Cursussen : ComponentBase
+    [Inject] public ICourseRepository CourseRepository { get; set; } = null!;
+
+    [SupplyParameterFromForm()] public Course NewCourse { get; set; } = new();
+
+    public string Naam { get; set; } = "JP";
+
+    public static List<Course>? Courses { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        [SupplyParameterFromForm()]
-        public Course NewCourse { get; set; } = new();
+        Courses = (await CourseRepository.GetAllAsync()).ToList();
+    }
 
-        public string Naam { get; set; } = "JP";
+    public async Task AddCourse()
+    {
+        await CourseRepository.Add(NewCourse);
+        Courses = (await CourseRepository.GetAllAsync()).ToList();
+    }
 
-        public static List<Course>? Courses { get; set; } = new()
-        {
-            new()
-            {
-                Title = "Awesome Blazorrrr",
-                NrOfDays = 5,
-                FunPhoto = "https://www.delta-n.nl/wp-content/uploads/2019/10/BrandBlazor_300.png"
-            },
-            new()
-            {
-                Title = "Awesome C#",
-                NrOfDays = 5,
-                FunPhoto = "https://miro.medium.com/v2/resize:fit:375/1*NhpIIUL7AFgKKn30gKoDUw.png"
-            },
-            new()
-            {
-                Title = "Matige React",
-                NrOfDays = 2,
-                FunPhoto = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/React.svg/1200px-React.svg.png"
-            }
-        };
-
-        public void AddCourse()
-        {
-            Courses.Add(NewCourse);
-        }
-
-        public void DuurtLang()
-        {
-            Thread.Sleep(3000);
-        }
+    public void DuurtLang()
+    {
+        Thread.Sleep(3000);
     }
 }

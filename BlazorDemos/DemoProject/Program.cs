@@ -1,9 +1,17 @@
 using DemoProject.Components;
+using DemoProject.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorComponents();
+
+
+// builder.Services.AddTransient<ICourseRepository, CourseRepository>(); // altijd een nieuwe instantie
+// builder.Services.AddScoped(); // nieuwe instantie per HTTP-request
+builder.Services.AddSingleton<ICourseRepository, CourseRepository>(); // altijd een nieuwe instantie
+// builder.Services.AddSingleton<>(); // 1 instance to rule them all
+
+
 
 var app = builder.Build();
 

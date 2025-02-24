@@ -54,16 +54,18 @@ else
 {
 	<table>
 		<thead>
-			<tr>
-				<th>Titel</th>
-				<th># dagen</th>
-				<th>Leuke foto</th>
-			</tr>
+		<tr>
+			<th>ID</th>
+			<th>Titel</th>
+			<th># dagen</th>
+			<th>Leuke foto</th>
+		</tr>
 		</thead>
 		<tbody>
 			@foreach (var course in Courses)
 			{
 				<tr>
+					<td>@course.Id</td>
 					<td>@course.Title</td>
 					<td>@course.NrOfDays (@(course.NrOfDays > 3 ? "lang" : "kort"))</td>
 					<td><img src="@course.FunPhoto"></td>
