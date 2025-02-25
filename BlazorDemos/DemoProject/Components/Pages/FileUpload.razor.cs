@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using DemoProject.Entities;
 using Microsoft.AspNetCore.Components;
 
@@ -15,5 +16,8 @@ public partial class FileUpload : ComponentBase
         using var reader = new StreamReader(stream);
         var algVoor = await reader.ReadToEndAsync();
         Console.WriteLine($"algemene voorwaarden: {algVoor}");
+        
+        // MediaTypeNames.Application.Json
+        
     }
 }

@@ -1,7 +1,16 @@
 using DemoProject.Components;
 using DemoProject.Repositories;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+// builder.WebHost.
+
+// HTTP/1.1
+// HTTP/2 SPDY  alleen maar HTTPS  multiplexing
+// HTTP/3 Quality UDP Internet Connections <== 
+
+// TCP => HTTP HTTP HTTP HTTP HTTP HTTP HTTP HTTP <=> TCP
+// UDP => HTTP HTTP HTTP HTTP HTTP HTTP HTTP HTTP <=> UDP
 
 builder.Services.AddRazorComponents();
 
@@ -10,7 +19,7 @@ builder.Services.AddRazorComponents();
 // builder.Services.AddScoped(); // nieuwe instantie per HTTP-request
 builder.Services.AddSingleton<ICourseRepository, CourseRepository>(); // altijd een nieuwe instantie
 // builder.Services.AddSingleton<>(); // 1 instance to rule them all
-
+builder.Services.AddMudServices();
 
 
 var app = builder.Build();
