@@ -1,5 +1,7 @@
 using DemoProject.Components;
+using DemoProject.DataAccess;
 using DemoProject.Repositories;
+using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,10 +16,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents();
 
+builder.Services.AddDbContext<DemoContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DemoContext"));
+}, ServiceLifetime.Transient);
 
 // builder.Services.AddTransient<ICourseRepository, CourseRepository>(); // altijd een nieuwe instantie
 // builder.Services.AddScoped(); // nieuwe instantie per HTTP-request
-builder.Services.AddSingleton<ICourseRepository, CourseRepository>(); // altijd een nieuwe instantie
+// builder.Services.AddSingleton<ICourseRepository, CourseRepository>(); // altijd een nieuwe instantie
+builder.Services.AddTransient<ICourseRepository, CourseDbRepository>(); // altijd een nieuwe instantie
+
 // builder.Services.AddSingleton<>(); // 1 instance to rule them all
 builder.Services.AddMudServices();
 
