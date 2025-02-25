@@ -7,7 +7,8 @@ namespace DemoProject.Components.Pages;
 public partial class Cursussen : ComponentBase
 {
     [Inject] public ICourseRepository CourseRepository { get; set; } = null!;
-
+    [Inject] public NavigationManager NavigationManager { get; set; } = null!;
+    
     [SupplyParameterFromForm()] public Course NewCourse { get; set; } = new();
 
     public string Naam { get; set; } = "JP";
@@ -23,6 +24,7 @@ public partial class Cursussen : ComponentBase
     {
         await CourseRepository.Add(NewCourse);
         Courses = (await CourseRepository.GetAllAsync()).ToList();
+        NavigationManager.NavigateTo("/CURSUSsen");
     }
 
     public void DuurtLang()
