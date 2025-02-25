@@ -199,11 +199,54 @@ Soorten dependencies:
     ```
     - [Microsoft Fakes](https://visualstudio.microsoft.com/vs/compare/), maar is helaasch enkel voor VS Enterprise
 
+## Styling/component libraries
+
+- [Awesome Blazor](https://github.com/AdrienTorris/awesome-blazor?tab=readme-ov-file#libraries--extensions) met veel linkjes naar handige projecten, waaronder component libraries
+- Meeste component libraries zijn gemaakt voor interactie Blazor-modus, experimenteer eerst goed om te kijken of het wel werkt met Blazor Static SSR
+
+## EF Core
+
+- ORM - Object (C#)-Relational (db-tabel) Mapper
+- leesbaarheid++
+  ```cs
+  context.Klanten.ToListAsync();
+  ```
+  ```cs
+  context.Klanten.Add(newKlant);
+  await context.SaveChangesAsync();
+  ```
+- `DbContext` staat centraal
+- database-onafhankelijk
+- migrations
+  - upgraden/downgraden naar volgende/vorige versie van db
+- alternatief: [Dapper](https://github.com/DapperLib/Dapper)
+- packages:
+  - `Microsoft.EntityFrameworkCore` - abstractie `DbContext` `DbSet<T>`
+  - `Microsoft.EntityFrameworkCore.SqlServer` - vertaalt het @ runtime naar SQL
+  - `Microsoft.EntityFrameworkCore.Tools/Design` - commando's `Update-Database` en migrations kunnen maken
+
+Vroegah:
+
+```cs
+using var conn = new SqlConnection(); // SqlServerConnection was een betere naam geweest
+using var command = new SqlCommand(); // SqlServerCommand was een betere naam geweest
+command.Connection = conn;
+command.CommandText = "SELECT * FROM klant;"; // SQL injection
+using var reader = command.ExecuteReader();
+while (reader.Next())
+{
+    reader["title"]
+    DateOnly.Parse(reader["startdate"])
+}
+```
+
+
 ## Visual Studio vs Rider
 
 - Rider heeft veel sterkere mening over code formatten
 - Visual Studio $$$ vs Rider $
 - Visual Studio 2022 64 bit  2^64  2^32 = 2.147.xxx.xxx * 2 = 4GB
-- Rider geeft aan wanneer een for="" niet matcht met een id
+- Rider geeft aan wanneer een `for=""` niet matcht met een id
 - Rider geeft rood bij niet-Git-toegevoegde files
   - [is wel instelbaar](https://www.jetbrains.com/help/rider/File_Status_Highlights.html)
+- Rider geeft waarschuwingen als je met EF Core een navigational entity aanspreekt die je niet `.Include()`
