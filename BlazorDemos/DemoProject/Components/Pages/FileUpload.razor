@@ -1,0 +1,9 @@
+@page "/FileUpload"
+<h3>FileUpload</h3>
+
+
+<EditForm Model="NewPark" enctype="multipart/form-data" OnValidSubmit="Process" FormName="bladiebla">
+    Name: <InputText @bind-Value="NewPark.Name" />
+    Alg. voorw. <input type="file" name="NewPark.AlgemeneVoorwaarden" />
+    <button>Submit</button>
+</EditForm>
