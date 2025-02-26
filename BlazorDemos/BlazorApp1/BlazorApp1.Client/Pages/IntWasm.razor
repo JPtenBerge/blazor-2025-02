@@ -1,0 +1,44 @@
+@page "/IntWasm"
+@using BlazorApp1.Client
+@using BlazorApp1.Client.Entities
+@using BlazorApp1.Client.Repositories
+@inject ICourseRepository CourseRepository
+@inject PersistentComponentState PersistentComponentState 
+@rendermode InteractiveWebAssembly
+
+<h3>IntWasm</h3>
+
+<Autocompleter Data="Courses" @rendermode="InteractiveWebAssembly" />
+
+<button @onclick="Refresh">Refresh</button>
+
+@code {
+    public List<Course>? Courses { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        PersistentComponentState.RegisterOnPersisting(PersistForClient);
+
+        // server: deze data is hier nog niet weggeschreven
+        if (!PersistentComponentState.TryTakeFromJson<List<Course>>("courses", out var courses))
+        {
+            await Refresh();
+        }
+        else
+        {
+            Courses = courses;
+        }
+        
+        Console.WriteLine("oniintt!");
+    }
+
+    Task PersistForClient()
+    {
+        PersistentComponentState.PersistAsJson("courses", Courses);
+        return Task.CompletedTask;
+    }
+
+    async Task Refresh()
+    {
+        Courses = (await CourseRepository.GetAllAsync()).ToList();
+    }
+}

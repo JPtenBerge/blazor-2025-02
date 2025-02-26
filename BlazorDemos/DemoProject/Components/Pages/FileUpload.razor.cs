@@ -1,4 +1,5 @@
 using System.Net.Mime;
+using BlazorApp1.Client.Entities;
 using DemoProject.Entities;
 using Microsoft.AspNetCore.Components;
 

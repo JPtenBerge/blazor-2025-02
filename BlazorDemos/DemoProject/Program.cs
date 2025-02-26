@@ -1,3 +1,4 @@
+using BlazorApp1.Client.Repositories;
 using DemoProject.Components;
 using DemoProject.DataAccess;
 using DemoProject.Repositories;
@@ -14,7 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 // TCP => HTTP HTTP HTTP HTTP HTTP HTTP HTTP HTTP <=> TCP
 // UDP => HTTP HTTP HTTP HTTP HTTP HTTP HTTP HTTP <=> UDP
 
-builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents()
+    .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddDbContextFactory<DemoContext>(options =>
 {
@@ -56,6 +59,8 @@ app.UseAntiforgery();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+    .AddInteractiveServerRenderMode()
+    .AddInteractiveWebAssemblyRenderMode()
+    .AddAdditionalAssemblies(typeof(BlazorApp1.Client._Imports).Assembly);
 
 app.Run();

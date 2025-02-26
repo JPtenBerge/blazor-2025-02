@@ -1,5 +1,6 @@
+using BlazorApp1.Client.Entities;
+using BlazorApp1.Client.Repositories;
 using DemoProject.DataAccess;
-using DemoProject.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.Repositories;

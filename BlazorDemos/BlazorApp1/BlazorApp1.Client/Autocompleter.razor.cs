@@ -1,8 +1,7 @@
-using System.Reflection;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace DemoProject.Components;
+namespace BlazorApp1.Client;
 
 public partial class Autocompleter<T> : ComponentBase
 {

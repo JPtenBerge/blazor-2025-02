@@ -1,4 +1,4 @@
-using DemoProject.Entities;
+using BlazorApp1.Client.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.DataAccess;

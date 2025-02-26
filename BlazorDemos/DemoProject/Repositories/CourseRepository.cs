@@ -1,4 +1,5 @@
-using DemoProject.Entities;
+using BlazorApp1.Client.Entities;
+using BlazorApp1.Client.Repositories;
 
 namespace DemoProject.Repositories;
 

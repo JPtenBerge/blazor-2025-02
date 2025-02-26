@@ -3,6 +3,10 @@
 
 <input @bind="Query" @bind:event="oninput" @bind:after="Autocomplete" @onkeydown="HandleKeydown"/>
 
+Renderer: @RendererInfo.IsInteractive
+Renderer name: @RendererInfo.Name
+
+
 @if (Suggestions != null)
 {
     <ul>

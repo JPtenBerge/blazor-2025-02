@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DemoProject.Entities;
+namespace BlazorApp1.Client.Entities;
 
 public class Course
 {

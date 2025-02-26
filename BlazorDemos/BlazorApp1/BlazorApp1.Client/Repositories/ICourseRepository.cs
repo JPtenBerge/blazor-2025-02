@@ -1,6 +1,6 @@
-using DemoProject.Entities;
+using BlazorApp1.Client.Entities;
 
-namespace DemoProject.Repositories;
+namespace BlazorApp1.Client.Repositories;
 
 public interface ICourseRepository
 {
