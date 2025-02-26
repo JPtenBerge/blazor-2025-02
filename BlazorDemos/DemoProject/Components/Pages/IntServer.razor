@@ -1,0 +1,22 @@
+@page "/IntServer"
+@using DemoProject.Repositories
+
+<h3>IntServer</h3>
+@* *@
+@* <Autocompleter Data="Courses" @rendermode="InteractiveServer"> *@
+@*     <ItemTemplate Context="course"> *@
+@*         <li>@course.Title duurt @course.NrOfDays dagen</li> *@
+@*     </ItemTemplate> *@
+@* </Autocompleter> *@
+
+<Autocompleter Data="Courses" @rendermode="InteractiveServer" />
+
+@code {
+    [Inject] public ICourseRepository CourseRepository { get; set; } = null!;
+    public static List<Course>? Courses { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        Courses = (await CourseRepository.GetAllAsync()).ToList();
+    }
+}

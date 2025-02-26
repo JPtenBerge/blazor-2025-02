@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 // TCP => HTTP HTTP HTTP HTTP HTTP HTTP HTTP HTTP <=> TCP
 // UDP => HTTP HTTP HTTP HTTP HTTP HTTP HTTP HTTP <=> UDP
 
-builder.Services.AddRazorComponents();
+builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 builder.Services.AddDbContext<DemoContext>(options =>
 {
@@ -28,6 +28,9 @@ builder.Services.AddTransient<ICourseRepository, CourseDbRepository>(); // altij
 
 // builder.Services.AddSingleton<>(); // 1 instance to rule them all
 builder.Services.AddMudServices();
+
+
+
 
 
 var app = builder.Build();
@@ -45,7 +48,9 @@ app.UseHttpsRedirection();
 
 app.UseAntiforgery();
 
+
 app.MapStaticAssets();
-app.MapRazorComponents<App>();
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
 
 app.Run();
