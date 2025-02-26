@@ -1,0 +1,58 @@
+@page "/Circuit"
+@using System.Text.Json
+@using DemoProject.DataAccess
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<DemoContext> ContextFactory
+@rendermode InteractiveServer
+
+<h3>Circuit</h3>
+
+<MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="GetAll">Get all</MudButton>
+<MudButton Color="Color.Secondary" Variant="Variant.Filled" OnClick="Add">Add</MudButton>
+<MudButton Color="Color.Tertiary" Variant="Variant.Filled" OnClick="Edit">Edit</MudButton>
+
+<hr/>
+
+Edit ID: <input @bind="CourseToEdit.Id"/>
+
+@JsonSerializer.Serialize(CourseToEdit)
+
+@if (Courses is not null)
+{
+    <ul>
+        @foreach (var course in Courses)
+        {
+            <li>@course.Id - @course.Title</li>
+        }
+    </ul>
+}
+
+@code {
+    public List<Course>? Courses { get; set; }
+
+    public Course CourseToAdd { get; set; } = new() { Title = "To be added course", NrOfDays = 3, FunPhoto = "https://bla.jpg" };
+    public Course CourseToEdit { get; set; } = new() { Title = "To be edited course", NrOfDays = 3, FunPhoto = "https://bla.jpg"  };
+
+    public async Task GetAll()
+    {
+        await using var context = await ContextFactory.CreateDbContextAsync();
+        Courses = await context.Courses.ToListAsync();
+    }
+
+    public async Task Add()
+    {
+        await using var context = await ContextFactory.CreateDbContextAsync();
+        context.Courses.Add(CourseToAdd);
+        await context.SaveChangesAsync(); // <== Id
+    }
+
+    public async Task Edit()
+    {
+        // var course = await Context.Courses.SingleAsync(x => x.Id == CourseToAdd.Id);
+        // course.Title += "q";
+        await using var context = await ContextFactory.CreateDbContextAsync();
+        context.Update(CourseToEdit);
+        await context.SaveChangesAsync();
+    }
+
+}

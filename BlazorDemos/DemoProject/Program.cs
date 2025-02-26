@@ -16,10 +16,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
-builder.Services.AddDbContext<DemoContext>(options =>
+builder.Services.AddDbContextFactory<DemoContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DemoContext"));
-}, ServiceLifetime.Transient);
+});
+
+// builder.Services.AddDbContext<DemoContext>(options =>
+// {
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("DemoContext"));
+// }, ServiceLifetime.Transient);
 
 // builder.Services.AddTransient<ICourseRepository, CourseRepository>(); // altijd een nieuwe instantie
 // builder.Services.AddScoped(); // nieuwe instantie per HTTP-request
