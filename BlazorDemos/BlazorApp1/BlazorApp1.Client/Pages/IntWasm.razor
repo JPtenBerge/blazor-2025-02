@@ -24,22 +24,22 @@
     protected override async Task OnInitializedAsync()
     {
         // server: deze data is hier nog niet weggeschreven
-        if (!PersistentComponentState.TryTakeFromJson<List<Course>>("courses", out var courses))
-        {
-            await Refresh();
-        }
-        else
-        {
-            Courses = courses;
-        }
-
-        Console.WriteLine("oniintt met late register!");
-        PersistentComponentState.RegisterOnPersisting(PersistForClient);
+        // if (!PersistentComponentState.TryTakeFromJson<List<Course>>("courses", out var courses))
+        // {
+        await Refresh();
+        // }
+        // else
+        // {
+        //     Courses = courses;
+        // }
+        //
+        // Console.WriteLine("oniintt met late register!");
+        // PersistentComponentState.RegisterOnPersisting(PersistForClient);
     }
 
     Task PersistForClient()
     {
-        PersistentComponentState.PersistAsJson("courses", Courses);
+        // PersistentComponentState.PersistAsJson("courses", Courses);
         return Task.CompletedTask;
     }
 

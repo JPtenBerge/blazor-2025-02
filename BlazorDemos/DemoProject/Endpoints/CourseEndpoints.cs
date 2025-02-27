@@ -1,5 +1,6 @@
 using BlazorApp1.Client.Entities;
 using BlazorApp1.Client.Repositories;
+using DemoProject.Dtos;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace DemoProject.Endpoints;
@@ -22,11 +23,16 @@ public static class CourseEndpoints
         return await courseRepository.GetAllAsync();
     }
 
-    public static async Task<Created<Course>> Add(ICourseRepository courseRepository, Course newCourse)
+    public static async Task<Created<CoursePostResponseDto>> Add(ICourseRepository courseRepository,
+        CoursePostRequestDto dto)
     {
-        return TypedResults.Created("", await courseRepository.Add(newCourse));
+        // validate shizzle
+        
+        
+        var updatedEntity = await courseRepository.Add(dto.ToEntity());
+        return TypedResults.Created("", new CoursePostResponseDto { Id = updatedEntity.Id });
     }
-    
+
     public static async Task<Created<Course>> Edit(ICourseRepository courseRepository, Course newCourse, int id)
     {
         return TypedResults.Created("", await courseRepository.Add(newCourse));

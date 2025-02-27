@@ -288,8 +288,10 @@ PUT  /api/car/15  { id: 15, make: "Opel", model: "Astra", ... }
 
 PATCH  /api/car/15  { id: 15, model: "Astra" }
 ```
+- idempotency - resultaat van meerdere malen een request uitvoeren
 
-idempotency - resultaat van meerdere malen een request uitvoeren
+Verder:
+- [REST maturity model/HATEOAS](https://martinfowler.com/articles/richardsonMaturityModel.html)
 
 ### HTTP-statuscodes
 
