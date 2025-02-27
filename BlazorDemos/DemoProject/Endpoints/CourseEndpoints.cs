@@ -14,7 +14,7 @@ public static class CourseEndpoints
         group.MapPost("/", Add);
         group.MapPut("/{id:int}", Edit);
 
-        return group;
+        return endpoints;
     }
 
     public static async Task<IEnumerable<Course>> GetAll(ICourseRepository courseRepository)
