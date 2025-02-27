@@ -67,6 +67,14 @@ a11y - accessibility
 - alles ok mensen
 - zoekmachines/bots/SEO/AI
 
+## HTTP
+
+- HTTP/1.1
+- HTTP/2 SPDY  alleen maar HTTPS  multiplexing
+- HTTP/3 Quality UDP Internet Connections <== 
+  - TCP => HTTP HTTP HTTP HTTP HTTP HTTP HTTP HTTP <=> TCP
+  - UDP => HTTP HTTP HTTP HTTP HTTP HTTP HTTP HTTP <=> UDP
+
 ## Blazor-edities
 
 - Blazor Static SSR - code draait op server - Console.WriteLines NIET in browser
@@ -336,8 +344,13 @@ Controllers:
   - `[FromBody]`
 - dependency injection in constructor
 - `[Required]`
+- `MapControllers()` vindt je controllers via:
+  - `[ApiController]` boven je class
+  - `: ControllerBase`
+  - in `Controllers/` folder
+  - suffix bij je classnaam `BlaController`
 
-minimal API:
+Minimal API:
 - dependency injection in het endpoint zelf
 - performance++
 - zelf bedenken/eraan houden afbakening/structuur
