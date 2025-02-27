@@ -1,6 +1,7 @@
 using BlazorApp1.Client.Repositories;
 using DemoProject.Components;
 using DemoProject.DataAccess;
+using DemoProject.Endpoints;
 using DemoProject.Repositories;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
@@ -14,6 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // TCP => HTTP HTTP HTTP HTTP HTTP HTTP HTTP HTTP <=> TCP
 // UDP => HTTP HTTP HTTP HTTP HTTP HTTP HTTP HTTP <=> UDP
+
+builder.Services.AddControllers();
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
@@ -51,13 +54,22 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-
-
-app.UseAntiforgery();
-
+app
+    .UseHttpsRedirection()
+    .UseAntiforgery();
 
 app.MapStaticAssets();
+
+app.MapControllers(); // project doorzoeken naar controllers
+// [ApiController]
+// : ControllerBase
+// : Controllers/
+// BlaController
+
+// app.MapGet();
+// app.MapPost();
+app.MapCourseEndpoints();
+
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
