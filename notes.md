@@ -240,6 +240,110 @@ while (reader.Next())
 }
 ```
 
+### Blazor Server vs WebAssembly
+
+- content projection werkt nie in Server
+- Server vereist WebSocket, WebAssembly vereist >7MB data over het lijntje
+- Server moet je opletten met EF Core en concurrency op hetzelfde circuit
+- WebAssembly die PersistentComponentState is confusing/complex/sus
+
+
+## REST: REpresentational State Transfer
+
+- Roy Fielding 2000
+- communicatieprotocol
+- alternatieven: SOAP (berg XML) GraphQL (REST++) gRPC tRPC
+  - gRPC - gRPC Remote Procedure Call
+    - heule grote hoeveelheden data  - begint vanaf 10MB
+    - Netflix
+    - serializatie - snel. veel datatypen. JSON ondersteunt enkel strings, numbers en booleans
+- stateless
+- werkt met verbs/methods
+- resources
+
+HTTP verbs/methods:
+- GET	  ophalen/read
+- POST	  toevoeging   opslaan
+- PUT	  wijzigen
+- PATCH	  deel wijzigen
+- DELETE  verwijderen/d uit CRUD
+
+```text
+POST  /api/car    { make: "Opel", model: "Astra", ... }
+POST  /api/car    { make: "Opel", model: "Astra", ... }
+POST  /api/car    { make: "Opel", model: "Astra", ... }
+
+PUT  /api/car/15  { id: 15, make: "Opel", model: "Astra", ... }
+PUT  /api/car/15  { id: 15, make: "Opel", model: "Astra", ... }
+PUT  /api/car/15  { id: 15, make: "Opel", model: "Astra", ... }
+
+PATCH  /api/car/15  { id: 15, model: "Astra" }
+```
+
+idempotency - resultaat van meerdere malen een request uitvoeren
+
+### HTTP-statuscodes
+
+- 2xx SUCCESS
+  - 200 OK
+  - 201 Created
+  - 204 No Content
+- 3xx redirects
+  - 301/302 temporary/permanent  Location: ...
+- 4xx client-side errors
+  - 400 Bad Request <== browser/client JIJ moet je request aanpassen
+  - 401 Unauthorized - je bent niet ingelogd / levert geen credentials aan
+  - 403 Forbidden - JIJ mag er niet bij
+  - 404 Not Found
+  - 405 Method not supported - POST => endpoint die geen POST ondersteunt
+  - 415 Mediatype not supported - XML ==> endpoint die geen XML kan parsen
+  - 418 [I'm a teapot](https://google.com/teapot) - 1 april-grap
+  - 422 Unprocessable entity
+- 5xx server-side errors
+  - 500 Internal Server Error
+  - 501/2/3 Gateway error  cloudflare
+
+### API testing tools
+
+- iedere IDE
+- Postman
+  - UI druk
+  - dark mode duurde lang
+  - paywall
+- Insomnia
+  - UI rustig
+  - kwam meteen met een dark mode
+  - electron
+  - helaasch paar jaar geleden overgekocht en heeft een paywall
+- VS Code-extensies:
+  - Thunder client
+  - REST client - `.rest` `.http`
+  - ...
+- Bruno
+- Hoppscotch
+
+## REST in ASP.NET Core
+
+Twee aanpakken:
+- traditioneel: controllers - snel te herkennen aan `builder.Services.AddControllers();`
+- moderne: minimal APIs
+
+Controllers:
+- voorgedefinieerde afbakening/structuur
+- komen oorspronkelijk uit MVC - Model-View-Controller
+- `[ApiController]`
+  - doet standaard valideren  `if (ModelState.IsValid)`
+  - `[FromBody]`
+- dependency injection in constructor
+- `[Required]`
+
+minimal API:
+- dependency injection in het endpoint zelf
+- performance++
+- zelf bedenken/eraan houden afbakening/structuur
+- geen validatie in - maar een hoop projecten gebruiken FluentValidation dus no biggie
+- sneller makkelijker betere API-documentatie
+
 
 ## Visual Studio vs Rider
 
