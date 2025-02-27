@@ -14,8 +14,8 @@ Renderer name: @RendererInfo.Name
         {
             var suggestion = Suggestions[i];
             <li class="@(HighlightedSuggestionIndex == i ? "highlight" : "")">
-                @* @ItemTemplate(suggestion) *@
-                @JsonSerializer.Serialize(suggestion)
+                @ItemTemplate(suggestion)
+                @* @JsonSerializer.Serialize(suggestion) *@
             </li>
         }
     </ul>
