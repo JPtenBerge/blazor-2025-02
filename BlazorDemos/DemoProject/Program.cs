@@ -5,16 +5,9 @@ using DemoProject.Endpoints;
 using DemoProject.Repositories;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
-// builder.WebHost.
-
-// HTTP/1.1
-// HTTP/2 SPDY  alleen maar HTTPS  multiplexing
-// HTTP/3 Quality UDP Internet Connections <== 
-
-// TCP => HTTP HTTP HTTP HTTP HTTP HTTP HTTP HTTP <=> TCP
-// UDP => HTTP HTTP HTTP HTTP HTTP HTTP HTTP HTTP <=> UDP
 
 builder.Services.AddControllers();
 
@@ -32,25 +25,15 @@ builder.Services.AddDbContextFactory<DemoContext>(options =>
 //     options.UseSqlServer(builder.Configuration.GetConnectionString("DemoContext"));
 // }, ServiceLifetime.Transient);
 
-// builder.Services.AddTransient<ICourseRepository, CourseRepository>(); // altijd een nieuwe instantie
-// builder.Services.AddScoped(); // nieuwe instantie per HTTP-request
-// builder.Services.AddSingleton<ICourseRepository, CourseRepository>(); // altijd een nieuwe instantie
-builder.Services.AddTransient<ICourseRepository, CourseDbRepository>(); // altijd een nieuwe instantie
-
-// builder.Services.AddSingleton<>(); // 1 instance to rule them all
+builder.Services.AddTransient<ICourseRepository, CourseDbRepository>();
 builder.Services.AddMudServices();
-
-
-
-
+builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -60,14 +43,14 @@ app
 
 app.MapStaticAssets();
 
-app.MapControllers(); // project doorzoeken naar controllers
-// [ApiController]
-// : ControllerBase
-// : Controllers/
-// BlaController
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+}
 
-// app.MapGet();
-// app.MapPost();
+app.MapControllers(); // project doorzoeken naar controllers
+
 app.MapCourseEndpoints();
 
 app.MapRazorComponents<App>()
