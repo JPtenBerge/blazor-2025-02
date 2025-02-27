@@ -268,6 +268,7 @@ while (reader.Next())
 - stateless
 - werkt met verbs/methods
 - resources
+  - [enkelvoud of meervoud?](https://stackoverflow.com/questions/6845772/should-i-use-singular-or-plural-name-convention-for-rest-resources). kies in ieder geval 1 en hou je daar als heel team aan.
 
 HTTP verbs/methods:
 - GET	  ophalen/read
