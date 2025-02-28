@@ -360,6 +360,115 @@ Minimal API:
 - geen validatie in - maar een hoop projecten gebruiken FluentValidation dus no biggie
 - sneller makkelijker betere API-documentatie
 
+## Testen
+
+Unittesten
+- testen van je code met andere code
+- zo klein mogelijk stukje code testen
+- mocken om andere stukken code weg te werken en daarmee de te testen code te isoleren
+- hier roep je jouw code aan
+- Karma is een testrunner, voor JavaScript-code (deprecated)
+
+Wat is een unit?
+
+```cs
+public void Add(int x)
+{
+	return Round(x + y);
+}
+
+// .Add(4);
+// .Add(8);
+// .Add(15);
+
+// Math.round() is hier van .NET
+// IsMath.Round() is ergens in ons project
+// Round() een private methode binnen dezelfde class?
+// Round() een public methode binnen dezelfde class?
+// Round() een HTTP-request naar Zweden maakt, maar de code staat wel in dezelfde class?
+```
+
+Integratietesten
+- niet meer 1 unit
+- "iets aan het integreren"
+  - iets niet mocken, bijv. de database
+  - request naar API sturen
+  - HTML renderen
+  - class A en class B laten samenwerken
+  - component A en component B laten samenwerken
+- hier roep je jouw code aan
+
+End-to-end testing
+- de hele flow/keten van "begin tot eind" - browser naar database
+- hier roep je niet jouw code aan
+- Cypress
+  - Chromium Firefox
+  - architectuur
+- Playwright (Microsoft)  TS C# Python
+  - browsers: Chromium Safari Edge Firefox
+
+Testframeworks
+- MSTest - default van Microsoft  `[TestMethod]`
+- xUnit    `[Fact]`/`[Theory]`
+- NUnit    `[Test]`
+
+Mockframeworks
+- Moq
+- NSubstitute
+- FakeItEasy
+- Rhino Mocks 💀☠
+
+
+Verder:
+- Toffere/makkelijkere assertions, vooral met collections/objecten: [AwesomeAssertions](https://awesomeassertions.org/objectgraphs/), een fork van het inmiddels peperdure FluentAssertions
+
+
+## Auth
+
+identificatie - wie ben je
+authenticatie - bewijs 't
+autorisatie - wat mag je
+
+### OAuth
+
+tokens:
+- JWT - JSON Web Token "jot"
+- SAML - Security Assertion Markup Language
+
+eyxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxx
+
+### JWT's
+
+soorten JWTs 3:
+- id token
+  - wie jij bent
+  - moet niet in verkeerde handen vallen - ook niet bij verkeerde servers/backends
+- access token
+  - iets doen
+  - levensduur is meestal vrij kort 5 min een uur
+- refresh token
+  - access token verlopen? tijd voor een nieuwe.
+  - zonder interactie met de gebruiker
+  - voorzichtig
+  - niet altijd nodig
+
+Worden met de HTTP-request meegestuurd:
+
+```text
+Authorization: Bearer sjjsdlkdfuiodsjfdjgifdjfjiofjdsifsdijfisod
+```
+
+Maar, waaaaaaaaaaar sla je dat token op in de browser?
+
+- local storage - XSS
+- session storage - XSS
+- cookies - HttpOnly  XSRF
+- indexeddb - XSS
+- gewoon in een JS variable - closure - druk op F5 en je bent uitgelogd
+- `caches`?
+  - nope, die is enkel voor requests/responses
+
+BFF ✔✔ is daar een mooie veilige plek voor.
 
 ## Visual Studio vs Rider
 
