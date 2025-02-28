@@ -1,8 +1,10 @@
 using BlazorApp1.Client.Repositories;
+using DemoProject.Auth;
 using DemoProject.Components;
 using DemoProject.DataAccess;
 using DemoProject.Endpoints;
 using DemoProject.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 using Scalar.AspNetCore;
@@ -10,6 +12,8 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddIdentity<DemoUser, IdentityRole>().AddEntityFrameworkStores<DemoContext>();
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()

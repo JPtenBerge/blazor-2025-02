@@ -1,0 +1,87 @@
+@page "/Auth/{action?}"
+@using DemoProject.Auth
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<DemoUser> UserManager
+@inject SignInManager<DemoUser> SignInManager
+@inject AuthenticationStateProvider AuthStateProvider
+
+<h3>Auth</h3>
+
+Status: @Status
+
+@if (AuthState?.User.Identity?.IsAuthenticated == true)
+{
+    <p>Ingelogd als @AuthState.User.Identity.Name</p>
+}
+
+
+<hr/>
+
+<a href="/auth/register">Registreer</a>
+<a href="/auth/login">Log in</a>
+<a href="/auth/logout">Log uit</a>
+<a href="/auth">Doe niks</a>
+
+@code {
+    [Parameter] public string Action { get; set; }
+    public string Status { get; set; }
+    public AuthenticationState? AuthState { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Action == "register")
+        {
+            await Register();
+        }
+        else if (Action == "login")
+        {
+            await Login();
+        }
+        else if (Action == "logout")
+        {
+            await Logout();
+        }
+
+        AuthState = await AuthStateProvider.GetAuthenticationStateAsync();
+    }
+
+    public async Task Register()
+    {
+        var jp = new DemoUser
+        {
+            UserName = "JP",
+            Email = "jp@jp.nl",
+            FavorieteChips = "Nibb-it sticks"
+        };
+        var result = await UserManager.CreateAsync(jp, "Top$ecr[]t123");
+        if (result.Succeeded)
+        {
+            Status = "Geregistreerd!";
+        }
+        else
+        {
+            Status = $"Kon niet registreren: {string.Join(", ", result.Errors.Select(x => x.Description))}";
+        }
+    }
+
+    public async Task Login()
+    {
+        var result = await SignInManager.PasswordSignInAsync("JP", "Top$ecr[]t123", false, false);
+        if (result.Succeeded)
+        {
+            Status = "Ingelogd!";
+        }
+        else
+        {
+            Status = $"Kon niet inloggen: {result.IsLockedOut} | {result.IsNotAllowed} | {result.RequiresTwoFactor}";
+        }
+    }
+
+    public async Task Logout()
+    {
+        await SignInManager.SignOutAsync();
+        Status = "Uitgelogd";
+    }
+
+}
