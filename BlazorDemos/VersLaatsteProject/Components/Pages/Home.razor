@@ -1,0 +1,52 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<EditForm Model="NewPark" OnValidSubmit="Doe" FormName="AddNewParkName">
+    <FluentValidationValidator/>
+
+    <ol>
+        <li>
+            <label for="input-Name">Naam:</label>
+            <InputText id="input-name" @bind-Value="NewPark.Name"/>
+            <ValidationMessage For="() => NewPark.Name"/>
+        </li>
+        <li>
+            <label for="input-PhotoUrl">Foto URL:</label>
+            <InputText id="input-PhotoUrl" @bind-Value="NewPark.PhotoUrl"/>
+            <ValidationMessage For="() => NewPark.PhotoUrl"/>
+        </li>
+        <li>
+            <label for="input-Rating">Rating:</label>
+            <InputNumber step="0.5" id="input-Rating" @bind-Value="NewPark.Rating"/>
+            <ValidationMessage For="() => NewPark.Rating"/>
+        </li>
+        <li>
+            <label for="input-NrOfVisitors">Aantal bezoekers:</label>
+            <InputNumber id="input-NrOfVisitors" @bind-Value="NewPark.NrOfVisitors"/>
+            <ValidationMessage For="() => NewPark.NrOfVisitors"/>
+        </li>
+        <li>
+            <label for="input-location">Locatie:</label>
+            <InputText id="input-location" @bind-Value="NewPark.Location"/>
+            <ValidationMessage For="() => NewPark.Location"/>
+        </li>
+        <li><button>Submit</button></li>
+    </ol>
+
+</EditForm>
+
+
+@code {
+
+    [SupplyParameterFromForm]
+    public Park NewPark { get; set; } = new();
+
+    public void Doe()
+    {
+        Console.WriteLine("Gesend!");
+    }    
+
+}

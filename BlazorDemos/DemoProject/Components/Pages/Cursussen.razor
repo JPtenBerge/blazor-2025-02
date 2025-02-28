@@ -1,4 +1,6 @@
 ﻿@page "/cursussen"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
 
 <PageTitle>Cursussen</PageTitle>
 
@@ -36,8 +38,6 @@
 		</li>
 	</ol>
 </EditForm>
-
-
 
 @if (Courses is null)
 {

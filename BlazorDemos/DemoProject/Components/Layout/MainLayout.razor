@@ -30,6 +30,14 @@
 <MudLayout>
     <MudAppBar Elevation="1" Dense="@true">
         <MudSpacer />
+        <AuthorizeView>
+            <Authorized Context="authState">
+                Hey hallo daar @authState.User.Identity.Name <a href="https://localhost:5010/account/logout">Uitloggen</a>
+            </Authorized>
+            <NotAuthorized>
+                Niet ingelogd! <a href="https://localhost:5010/account/login">Inloggen</a>
+            </NotAuthorized>
+        </AuthorizeView>
         <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="https://github.com/MudBlazor/MudBlazor" Target="_blank" />
     </MudAppBar>
     <MudDrawer @bind-Open="_open" ClipMode="_clipMode" Breakpoint="@_breakpoint" Elevation="1" Variant="@DrawerVariant.Mini">
