@@ -1,0 +1,38 @@
+﻿@page "/photos/all"
+@inject IPhotosService PhotosService
+<h3>All Photos</h3>
+
+<AuthorizeView>
+    <Authorized>
+        <NavLink href="photos/create">Upload a Photo</NavLink>
+    </Authorized>
+    <NotAuthorized>
+        <NavLink class="nav-link" href="authentication/login">
+            <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login to Upload a Photo
+        </NavLink>
+    </NotAuthorized>
+</AuthorizeView>
+
+@if (photos is null)
+{
+    <p>...Loading...</p>
+} else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var photo in photos)
+    {
+        <div class="col">
+            <PhotoCard Photo="photo" ShowDelete ShowDetails ShowUpdate />
+        </div>
+    }
+    </div>
+}
+
+@code {
+    IEnumerable<Photo> photos = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        photos = await PhotosService.GetPhotosAsync();
+    }
+}
