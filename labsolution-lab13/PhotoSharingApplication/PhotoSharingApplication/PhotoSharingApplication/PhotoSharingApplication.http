@@ -1,0 +1,37 @@
+﻿@PhotoSharingApplication_HostAddress = https://localhost:7246
+
+GET {{PhotoSharingApplication_HostAddress}}/api/photos/1/comments
+
+###
+
+GET {{PhotoSharingApplication_HostAddress}}/api/comments/8
+
+###
+
+POST {{PhotoSharingApplication_HostAddress}}/api/comments
+Content-Type: application/json
+
+{
+"id": 0,
+"photoId": 1,
+"subject": "New Comment",
+"body": "Added through .http file"
+}
+
+###
+
+PUT {{PhotoSharingApplication_HostAddress}}/api/comments/8
+Content-Type: application/json
+
+{
+    "id": 8,
+    "photoId": 1,
+    "subject": "New Comment",
+    "body": "Modified through .http file"
+}
+
+###
+
+DELETE {{PhotoSharingApplication_HostAddress}}/api/comments/8
+
+###
